@@ -14,7 +14,9 @@ User = get_user_model()
 from django import template
 register = template.Library()
 # Create your models here.
-name = models.CharField(max_length=255, unique=True)
+
+class Group(models.Model):
+    name = models.CharField(max_length=255, unique=True)
     slug = models.SlugField(allow_unicode=True, unique=True)
     description = models.TextField(blank=True, default='')
     description_html = models.TextField(editable=False, default='', blank=True)
@@ -34,7 +36,7 @@ name = models.CharField(max_length=255, unique=True)
 
     class Meta:
         ordering = ["name"]
-        
+
 class GroupMember(models.Model):
     group = models.ForeignKey(Group, related_name="memberships")
     user = models.ForeignKey(User,related_name='user_groups')

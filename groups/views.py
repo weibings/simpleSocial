@@ -11,7 +11,7 @@ from django.views import generic
 from groups.models import Group,GroupMember
 from . import models
 
-class CreateGroup(LoginRequiredMixin, generic.CreateView):
+class CreateGroup(LoginRequiredMixin, generic.edit.CreateView):
     fields = ("name", "description")
     model = Group
 
@@ -22,7 +22,7 @@ class ListGroups(generic.list.ListView):
     model = Group
 
 
-class JoinGroup(LoginRequiredMixin, base.RedirectView):
+class JoinGroup(LoginRequiredMixin, generic.base.RedirectView):
 
     def get_redirect_url(self, *args, **kwargs):
         return reverse("groups:single",kwargs={"slug": self.kwargs.get("slug")})
@@ -42,7 +42,7 @@ class JoinGroup(LoginRequiredMixin, base.RedirectView):
         return super().get(request, *args, **kwargs)
 
 
-class LeaveGroup(LoginRequiredMixin, base.RedirectView):
+class LeaveGroup(LoginRequiredMixin, generic.base.RedirectView):
 
     def get_redirect_url(self, *args, **kwargs):
         return reverse("groups:single",kwargs={"slug": self.kwargs.get("slug")})
